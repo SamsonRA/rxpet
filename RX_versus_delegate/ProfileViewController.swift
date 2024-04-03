@@ -85,6 +85,45 @@ class ProfileViewController: UIViewController  {
         return image
     }()
     
+    //MARK: - SignIn button config
+    
+    private lazy var signInButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .systemGray5
+        button.layer.cornerRadius = 12
+        button.addTarget(self, action: #selector(languageButtonPressed), for: .touchUpInside)
+        return button
+    }()
+    
+    //MARK: - функция обработки нажатия на кнопку регистрации
+    
+    @objc private func signInButtonPressed(sender: UIButton) {
+        sender.alpha = 0.3
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            sender.alpha = 1.0
+        }
+        let destinationVC = LanguageViewController()
+        navigationController?.pushViewController(destinationVC, animated: true)
+    }
+    
+    private let signInButtonTitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.text = "Sign In"
+        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.textColor = .darkGray
+        return label
+    }()
+    
+    private let signInButtonArrowImage: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.image = UIImage(named: "arrowRight")
+        return image
+    }()
+    
     //MARK: - Terms & Conditions button config
     
     private lazy var termsConditionsButton: UIButton = {
@@ -95,6 +134,7 @@ class ProfileViewController: UIViewController  {
         button.addTarget(self, action: #selector(termsConditionsButtonPressed), for: .touchUpInside)
         return button
     }()
+    
     // функция обработки нажатия на кнопку Terms & Conditions
     @objc private func termsConditionsButtonPressed(sender: UIButton) {
         sender.alpha = 0.3
@@ -169,6 +209,10 @@ class ProfileViewController: UIViewController  {
         languageButton.addSubview(languageButtonTitleLabel)
         languageButton.addSubview(languageButtonArrowImage)
         
+        view.addSubview(signInButton)
+        signInButton.addSubview(signInButtonTitleLabel)
+        signInButton.addSubview(signInButtonArrowImage)
+        
         view.addSubview(termsConditionsButton)
         termsConditionsButton.addSubview(termsConditionsButtonTitleLabel)
         termsConditionsButton.addSubview(termsConditionsButtonArrowImage)
@@ -205,6 +249,19 @@ class ProfileViewController: UIViewController  {
             
             languageButtonArrowImage.trailingAnchor.constraint(equalTo: languageButton.trailingAnchor, constant: -24),
             languageButtonArrowImage.centerYAnchor.constraint(equalTo: languageButton.centerYAnchor),
+            
+            //MARK: - Sign In button config
+            signInButton.topAnchor.constraint(equalTo: languageButton.bottomAnchor, constant: 28),
+            signInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            signInButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            signInButton.heightAnchor.constraint(equalToConstant: 56),
+            
+            signInButtonTitleLabel.leadingAnchor.constraint(equalTo: signInButton.leadingAnchor, constant: 24),
+            signInButtonTitleLabel.centerYAnchor.constraint(equalTo: signInButton.centerYAnchor),
+            
+            signInButtonArrowImage.trailingAnchor.constraint(equalTo: signInButton.trailingAnchor, constant: -24),
+            signInButtonArrowImage.centerYAnchor.constraint(equalTo: signInButton.centerYAnchor),
+            
             //MARK: - Terms & Conditions button config
             termsConditionsButton.topAnchor.constraint(equalTo: languageButton.bottomAnchor, constant: 240),
             termsConditionsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
